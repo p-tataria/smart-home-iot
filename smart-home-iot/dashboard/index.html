@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Smart Home Security &amp; Energy Management</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand">Smart Home<br><span>Security &amp; Energy</span></div>
+    <nav>
+      <a href="#security">Security</a>
+      <a href="#environment">Environment</a>
+      <a href="#energy">Energy</a>
+      <a href="#appliance">Appliance</a>
+      <a href="#system">System</a>
+    </nav>
+    <div class="side-foot">
+      <span id="connDot" class="dot off"></span> <span id="connText">Connecting…</span>
+    </div>
+  </aside>
+
+  <main>
+    <header class="topbar">
+      <h1>Smart Home Security &amp; Energy Management</h1>
+      <div class="muted">Last update: <span id="lastUpdate">—</span></div>
+    </header>
+
+    <div id="alertBanner" class="banner" hidden>
+      <strong>Security alert</strong> <span id="alertText"></span>
+    </div>
+
+    <section id="security" class="panel">
+      <h2>Security</h2>
+      <div class="grid four">
+        <div class="stat"><div class="label">Security status</div><div id="secStatus" class="pill muted-pill">—</div></div>
+        <div class="stat"><div class="label">Door</div><div id="door" class="pill muted-pill">—</div></div>
+        <div class="stat"><div class="label">Motion</div><div id="motion" class="pill muted-pill">—</div></div>
+        <div class="stat"><div class="label">Buzzer</div><div id="buzzer" class="pill muted-pill">—</div></div>
+      </div>
+      <h3>Recent security alerts</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Time</th><th>Event</th><th>Door</th><th>Motion</th></tr></thead>
+          <tbody id="eventsBody"><tr><td colspan="4" class="muted">No events recorded yet.</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="environment" class="panel">
+      <h2>Environment</h2>
+      <div class="grid three">
+        <div class="stat"><div class="label">Temperature</div><div class="value"><span id="temp">—</span><small> °C</small></div></div>
+        <div class="stat"><div class="label">Humidity</div><div class="value"><span id="hum">—</span><small> %</small></div></div>
+        <div class="stat"><div class="label">Light level</div><div class="value"><span id="light">—</span><small id="lightPct"></small></div></div>
+      </div>
+      <div id="dhtWarn" class="note warn" hidden>DHT11 sensor error: showing the last valid reading.</div>
+      <div class="chart-box"><canvas id="envChart"></canvas></div>
+    </section>
+
+    <section id="energy" class="panel">
+      <div class="panel-head">
+        <h2>Energy</h2>
+        <label class="muted">Range
+          <select id="range">
+            <option value="15">15 min</option>
+            <option value="60" selected>1 hour</option>
+            <option value="360">6 hours</option>
+            <option value="1440">24 hours</option>
+          </select>
+        </label>
+      </div>
+      <div class="grid three">
+        <div class="stat"><div class="label" id="energyLabel">Simulated Energy/Current Value</div>
+          <div class="value"><span id="energyValue">—</span><small id="energyUnit"></small></div></div>
+        <div class="stat"><div class="label">Energy status</div><div id="energyStatus" class="pill muted-pill">—</div></div>
+        <div class="stat"><div class="label">Level</div>
+          <div class="bar"><div id="energyBar" class="bar-fill"></div></div>
+          <div id="energyPct" class="muted">—</div></div>
+      </div>
+      <div id="simNote" class="note">Simulation value from a potentiometer. It is not a real power or cost measurement.</div>
+      <div class="chart-box"><canvas id="energyChart"></canvas></div>
+    </section>
+
+    <section id="appliance" class="panel">
+      <h2>Appliance</h2>
+      <div class="grid two">
+        <div class="stat"><div class="label">Relay status</div><div id="relayState" class="pill muted-pill">—</div>
+          <div id="relaySource" class="muted"></div></div>
+        <div class="stat">
+          <div class="label">Appliance control</div>
+          <div class="btn-row">
+            <button id="btnOn" class="btn primary">Turn ON</button>
+            <button id="btnOff" class="btn">Turn OFF</button>
+          </div>
+          <div id="relayMsg" class="muted" role="status"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="system" class="panel">
+      <h2>System</h2>
+      <div class="grid four">
+        <div class="stat"><div class="label">ESP32</div><div id="sysEsp" class="pill muted-pill">—</div></div>
+        <div class="stat"><div class="label">MQTT broker</div><div id="sysMqtt" class="pill muted-pill">—</div></div>
+        <div class="stat"><div class="label">Backend</div><div id="sysBackend" class="pill muted-pill">—</div></div>
+        <div class="stat"><div class="label">Last update</div><div id="sysLast" class="small-value">—</div></div>
+      </div>
+      <div class="muted" id="sysDetail"></div>
+    </section>
+  </main>
+</body>
+</html>
